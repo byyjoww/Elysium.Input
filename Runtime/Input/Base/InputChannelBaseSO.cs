@@ -4,32 +4,35 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public abstract class InputChannelBaseSO : ScriptableObject
+namespace Elysium.Input
 {
-    public InputKeybinds Keybinds { get; protected set; }
-
-    // DEVICE CONNECTIVITY
-    public event UnityAction OnDeviceDisconnected;
-    public event UnityAction OnDeviceReconnected;
-
-    protected virtual void OnEnable()
+    public abstract class InputChannelBaseSO : ScriptableObject
     {
-        InputSystem.onDeviceChange += OnDeviceChanged;
-        EnableDefaultInput();
-    }
-    protected virtual void OnDisable()
-    {
-        InputSystem.onDeviceChange -= OnDeviceChanged;
-        DisableAllInput();
-    }
+        public InputKeybinds Keybinds { get; protected set; }
 
-    protected abstract void EnableDefaultInput();
+        // DEVICE CONNECTIVITY
+        public event UnityAction OnDeviceDisconnected;
+        public event UnityAction OnDeviceReconnected;
 
-    protected abstract void DisableAllInput();
+        protected virtual void OnEnable()
+        {
+            InputSystem.onDeviceChange += OnDeviceChanged;
+            EnableDefaultInput();
+        }
+        protected virtual void OnDisable()
+        {
+            InputSystem.onDeviceChange -= OnDeviceChanged;
+            DisableAllInput();
+        }
 
-    protected virtual void OnDeviceChanged(InputDevice _device, InputDeviceChange _change)
-    {
-        if (_change == InputDeviceChange.Disconnected) { OnDeviceDisconnected?.Invoke(); }
-        if (_change == InputDeviceChange.Reconnected) { OnDeviceReconnected?.Invoke(); }
+        protected abstract void EnableDefaultInput();
+
+        protected abstract void DisableAllInput();
+
+        protected virtual void OnDeviceChanged(InputDevice _device, InputDeviceChange _change)
+        {
+            if (_change == InputDeviceChange.Disconnected) { OnDeviceDisconnected?.Invoke(); }
+            if (_change == InputDeviceChange.Reconnected) { OnDeviceReconnected?.Invoke(); }
+        }
     }
 }

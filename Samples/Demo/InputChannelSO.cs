@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Elysium.Input;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
