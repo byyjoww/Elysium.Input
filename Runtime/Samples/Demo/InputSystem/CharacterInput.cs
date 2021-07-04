@@ -9,6 +9,7 @@ using UnityEngine.InputSystem;
 
 namespace Elysium.Input
 {
+#if ENABLE_INPUT_SYSTEM
 	[RequireComponent(typeof(PlayerInput))]
 	public class CharacterInput : MonoBehaviour, IInputReceiver
 	{
@@ -40,7 +41,6 @@ namespace Elysium.Input
 		public event UnityAction<bool> OnSprintStatusChanged = delegate { };
 		public event UnityAction<bool> OnAimStatusChanged = delegate { };
 
-#if ENABLE_INPUT_SYSTEM
 		public void OnMove(InputValue value)
 		{
 			SetMoveInput(value.Get<Vector2>());
@@ -68,8 +68,6 @@ namespace Elysium.Input
 		{
 			SetAimInput(value.isPressed);
 		}
-
-#endif
 
 		public virtual void SetMoveInput(Vector2 _direction)
 		{
@@ -105,5 +103,6 @@ namespace Elysium.Input
 			aim = _isAiming;
 			if (aim != prev) { OnAimStatusChanged?.Invoke(aim); }
 		}
-	}	
+	}
+#endif
 }
