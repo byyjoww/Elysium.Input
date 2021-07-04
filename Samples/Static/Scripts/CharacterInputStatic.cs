@@ -21,16 +21,13 @@ namespace Elysium.Input.Static
 
 		[Separator("Look Settings", true)]
 		[SerializeField] private bool lookInvertMouseX = false;
-		[SerializeField] private bool lookInvertMouseY = false;
-		[SerializeField] private Vector2 lookInputScaling = new Vector2(15, 15);
+		[SerializeField] private bool lookInvertMouseY = true;
+		[SerializeField] private Vector2 lookInputScaling = new Vector2(100, 100);
 
-		[Separator("Keybinds", true)]		
+		[Separator("Keybinds", true)]
 		[SerializeField] private KeyCode jumpKey = KeyCode.Space;
 		[SerializeField] private KeyCode sprintKey = KeyCode.LeftShift;
 		[SerializeField] private KeyCode aimKey = KeyCode.Mouse1;
-
-		// private variables
-		private Vector2? lastFrameMousePosition = null;
 
 		// public properties
 		public Vector2 Move => move;
@@ -57,23 +54,23 @@ namespace Elysium.Input.Static
 		}
 
 		public virtual void CheckMove()
-        {
+		{
 			float h = UnityEngine.Input.GetAxisRaw("Horizontal");
 			float v = UnityEngine.Input.GetAxisRaw("Vertical");
 			Vector2 m = new Vector2(h, v);
-            SetMoveInput(m);
+			SetMoveInput(m);
 		}
 
 		public virtual void CheckLook()
 		{
-			if(cursorLock.CursorInputForLook)
+			if (cursorLock.UseCursorDeltaForLook && cursorLock.IsLocked)
 			{
-				Vector2 mousePos = UnityEngine.Input.mousePosition;
-				Vector2 delta = lastFrameMousePosition.HasValue ? mousePos - lastFrameMousePosition.Value : Vector2.zero;
-				lastFrameMousePosition = mousePos;
+				float h = UnityEngine.Input.GetAxis("Mouse X");
+				float v = UnityEngine.Input.GetAxis("Mouse Y");
+				Vector2 delta = new Vector2(h, v);
 
 				float x = lookInvertMouseX ? -delta.x : delta.x;
-				float y = lookInvertMouseX ? -delta.y : delta.y;
+				float y = lookInvertMouseY ? -delta.y : delta.y;
 
 				Vector2 l = new Vector2(x * lookInputScaling.x, y * lookInputScaling.y);
 				SetLookInput(l);
@@ -88,12 +85,12 @@ namespace Elysium.Input.Static
 
 		public virtual void CheckSprint()
 		{
-			bool isSprinting = UnityEngine.Input.GetKeyDown(sprintKey);
+			bool isSprinting = UnityEngine.Input.GetKey(sprintKey);
 			SetSprintInput(isSprinting);
 		}
 
 		public virtual void CheckAim()
-        {
+		{
 			bool isAiming = UnityEngine.Input.GetKey(aimKey);
 			SetAimInput(isAiming);
 		}

@@ -48,7 +48,7 @@ namespace Elysium.Input
 
 		public void OnLook(InputValue value)
 		{
-			if(cursorLock.CursorInputForLook)
+			if(cursorLock.UseCursorDeltaForLook)
 			{
 				SetLookInput(value.Get<Vector2>());
 			}

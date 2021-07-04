@@ -10,11 +10,12 @@ namespace Elysium.Input
     public class CursorLock
     {
 #if !UNITY_IOS || !UNITY_ANDROID
-        [SerializeField] private bool cursorLocked = true;
-        [SerializeField] private bool cursorInputForLook = true;
+        [SerializeField] private bool lockCursor = true;
+        [SerializeField] private bool useCursorDeltaForLook = true;
 
-        public bool CursorLocked => cursorLocked;
-        public bool CursorInputForLook => cursorInputForLook;
+        public bool LockCursor => lockCursor;
+        public bool UseCursorDeltaForLook => useCursorDeltaForLook;
+        public bool IsLocked => Cursor.lockState == CursorLockMode.Locked;
 
         public event UnityAction<bool> OnCursorLockStatusChanged = delegate { };
 
@@ -31,14 +32,14 @@ namespace Elysium.Input
         private void OnApplicationFocusChanged(bool _isFocused)
         {
             if (!_isFocused || !Application.isPlaying) { return; }
-            SetCursorState(cursorLocked);
+            SetCursorState(lockCursor);
         }
 
         private void SetCursorState(bool _lock)
         {
             CursorLockMode prev = Cursor.lockState;
             Cursor.lockState = _lock ? CursorLockMode.Locked : CursorLockMode.None;
-            if (Cursor.lockState != prev) { OnCursorLockStatusChanged?.Invoke(cursorLocked); }
+            if (Cursor.lockState != prev) { OnCursorLockStatusChanged?.Invoke(lockCursor); }
         }
 #endif
     }

@@ -67,7 +67,7 @@ namespace Elysium.Input
 
 		public void OnLook(InputAction.CallbackContext _context)
 		{
-			if (cursorLock.CursorInputForLook)
+			if (cursorLock.UseCursorDeltaForLook)
 			{
 				SetLookInput(_context.ReadValue<Vector2>());
 			}
