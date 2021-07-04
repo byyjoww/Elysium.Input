@@ -50,11 +50,11 @@ MonoBehaviour:
   aim: 0
   analogMovement: 0
   cursorLock:
-    cursorLocked: 1
-    cursorInputForLook: 1
+    lockCursor: 1
+    useCursorDeltaForLook: 1
   lookInvertMouseX: 0
-  lookInvertMouseY: 0
-  lookInputScaling: {x: 15, y: 15}
+  lookInvertMouseY: 1
+  lookInputScaling: {x: 100, y: 100}
   jumpKey: 32
   sprintKey: 304
   aimKey: 324

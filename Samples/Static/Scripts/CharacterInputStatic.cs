@@ -63,6 +63,9 @@ namespace Elysium.Input.Static
 
 		public virtual void CheckLook()
 		{
+			// Prevent look camera from moving as soon as the game finishes loading
+			if (Time.frameCount < 10) { return; }
+
 			if (cursorLock.UseCursorDeltaForLook && cursorLock.IsLocked)
 			{
 				float h = UnityEngine.Input.GetAxis("Mouse X");
