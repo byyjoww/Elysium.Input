@@ -8,13 +8,14 @@ using UnityEngine.InputSystem;
 namespace Elysium.Input
 {
     [CreateAssetMenu(fileName = "CharacterInputSO", menuName = "Scriptable Objects/Input/CharacterInputSO")]
-    public class CharacterInputSystemSO : BaseInputSO, IInputReceiver, CharacterInputControls.IPlayerActions
+    public class CharacterInputSO : BaseInputSO, IInputReceiver, CharacterInputControls.IPlayerActions
     {
 		[Separator("Character Input Values", true)]
 		[SerializeField, ReadOnly] private Vector2 move = default;
 		[SerializeField, ReadOnly] private Vector2 look = default;
 		[SerializeField, ReadOnly] private bool jump = default;
 		[SerializeField, ReadOnly] private bool sprint = default;
+		[SerializeField, ReadOnly] private bool aim = default;
 
 		[Separator("Movement Settings", true)]
 		[SerializeField] private bool analogMovement = default;
@@ -26,13 +27,14 @@ namespace Elysium.Input
 		public bool Sprint => sprint;
 		public bool AnalogMovement => analogMovement;
 		public bool Jump => jump;
+		public bool Aim => aim;
 
 		// public events
 		public event UnityAction<Vector2> OnMoveInputChanged = delegate { };
 		public event UnityAction<Vector2> OnLookInputChanged = delegate { };
 		public event UnityAction<bool> OnJumpStatusChanged = delegate { };
-		public event UnityAction<bool> OnSprintStatusChanged = delegate { };		
-
+		public event UnityAction<bool> OnSprintStatusChanged = delegate { };
+		public event UnityAction<bool> OnAimStatusChanged = delegate { };
 
 #if ENABLE_INPUT_SYSTEM
 		public CharacterInputControls InputHandler { get; private set; }
@@ -80,9 +82,14 @@ namespace Elysium.Input
 		{
 			SetSprintInput(_context.phase == InputActionPhase.Performed);
 		}
+
+		public void OnAim(InputAction.CallbackContext _context)
+		{
+			SetAimInput(_context.phase == InputActionPhase.Performed);
+		}
 #endif
 
-        public virtual void SetMoveInput(Vector2 _direction)
+		public virtual void SetMoveInput(Vector2 _direction)
         {
             Vector2 prev = move;
             move = _direction;
@@ -109,5 +116,12 @@ namespace Elysium.Input
             sprint = _isSprinting;
             if (sprint != prev) { OnSprintStatusChanged?.Invoke(sprint); }
         }
-    }
+
+		public virtual void SetAimInput(bool _isAiming)
+		{
+			bool prev = aim;
+			aim = _isAiming;
+			if (aim != prev) { OnAimStatusChanged?.Invoke(aim); }
+		}
+	}
 }
