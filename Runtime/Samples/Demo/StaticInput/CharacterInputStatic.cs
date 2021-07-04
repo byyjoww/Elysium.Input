@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Elysium.Input
+namespace Elysium.Input.Static
 {
-    public class CharacterInputOld : MonoBehaviour, IInputReceiver
+    public class CharacterInputStatic : MonoBehaviour, IInputReceiver
 	{
 		[Separator("Character Input Values", true)]
 		[SerializeField, ReadOnly] private Vector2 move = default;

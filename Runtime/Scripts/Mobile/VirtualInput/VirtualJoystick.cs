@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using Elysium.Utils.Attributes;
 
-namespace Elysium.Input
+namespace Elysium.Input.Mobile
 {
     public class VirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler, IInputBroadcaster<Vector2>
     {

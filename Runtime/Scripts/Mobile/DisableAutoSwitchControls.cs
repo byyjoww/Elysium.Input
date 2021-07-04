@@ -12,7 +12,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 #endif
 
-namespace Elysium.Input
+namespace Elysium.Input.Mobile
 {
     public class DisableAutoSwitchControls : MonoBehaviour
     {

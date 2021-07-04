@@ -7,7 +7,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 #endif
 
-namespace Elysium.Input
+namespace Elysium.Input.Mobile
 {
 	[RequireComponent(typeof(DisableAutoSwitchControls))]
     public class CharacterJoystickInput : MonoBehaviour, IInputReceiver
