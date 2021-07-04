@@ -10,7 +10,6 @@ namespace Elysium.Input
     public class CursorLock
     {
 #if !UNITY_IOS || !UNITY_ANDROID
-        [Separator("Mouse Cursor Settings", true)]
         [SerializeField] private bool cursorLocked = true;
         [SerializeField] private bool cursorInputForLook = true;
 
@@ -31,7 +30,7 @@ namespace Elysium.Input
 
         private void OnApplicationFocusChanged(bool _isFocused)
         {
-            if (!_isFocused) { return; }
+            if (!_isFocused || !Application.isPlaying) { return; }
             SetCursorState(cursorLocked);
         }
 

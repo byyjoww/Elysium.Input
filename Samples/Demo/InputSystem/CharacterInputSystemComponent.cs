@@ -19,6 +19,8 @@ namespace Elysium.Input
 
 		[Separator("Movement Settings", true)]
         [SerializeField] private bool analogMovement = default;
+
+		[Separator("Cursor Settings", true)]
 		[SerializeField] private CursorLock cursorLock = new CursorLock();
 
 		public Vector2 Move => move;
@@ -65,7 +67,7 @@ namespace Elysium.Input
 		}
 
 		public virtual void SetJumpInput(bool _isJumping)
-		{
+		{			
 			jump = _isJumping;
 		}
 
