@@ -8,18 +8,17 @@ namespace Elysium.Input
 {
     public class InputKeybinds
     {
-        // private InputHandler inputHandler = default;    
-
         // REBINDING
         public event UnityAction<InputAction> OnRebindingStarted;
         public event UnityAction<InputAction> OnRebindingComplete;
 
-        //public InputKeybinds(InputHandler inputHandler)
-        //{
-        //    this.inputHandler = inputHandler;
-        //}
+        public InputKeybinds(List<InputAction> _rebindableActions)
+        {
+            this.rebindableActions = _rebindableActions;
+        }
 
-        public List<InputAction> AllActions => new List<InputAction>();// inputHandler.Gameplay.Get().actions; // => SET ALL ACTIONS HERE
+        // public List<InputAction> AllActions => new List<InputAction>(); inputHandler.Gameplay.Get().actions; // => SET ALL ACTIONS HERE
+        private List<InputAction> rebindableActions = default;
 
         public void ChangeKeybind(InputAction _action, int _keyIndex, UnityEvent _cancel)
         {
@@ -54,7 +53,7 @@ namespace Elysium.Input
 
         public void RevertAllKeybindingsToDefault()
         {
-            List<InputAction> actions = new List<InputAction>(AllActions);
+            List<InputAction> actions = new List<InputAction>(rebindableActions);
             for (int i = 0; i < actions.Count; i++)
             {
                 if (!IsRebindableAction(actions[i])) { continue; }
@@ -68,7 +67,7 @@ namespace Elysium.Input
         {
             InputControl control = InputSystem.FindControl(_operation.selectedControl.path);
 
-            List<InputAction> actions = new List<InputAction>(AllActions);
+            List<InputAction> actions = new List<InputAction>(rebindableActions);
             for (int i = 0; i < actions.Count; i++)
             {
                 for (int j = 0; j < actions[i].controls.Count; j++)
@@ -84,16 +83,9 @@ namespace Elysium.Input
 
         public bool IsRebindableAction(InputAction _action)
         {
-            List<InputAction> RebindableActions = new List<InputAction>()
-            {
-                // SET ALL REBINDABLE ACTIONS HERE
-            };
-
-            if (RebindableActions.Contains(_action)) { return true; }
-            return false;
+            return rebindableActions.Contains(_action);
         }
 
-        #region UTILS
         public static string GetActionKeybind(InputAction _action, int _index)
         {
             // int bindingIndex = _action.GetBindingIndexForControl(_action.controls[_index]);
@@ -103,6 +95,5 @@ namespace Elysium.Input
                 InputControlPath.HumanReadableStringOptions.OmitDevice
             );
         }
-        #endregion
     }
 }

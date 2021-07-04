@@ -6,9 +6,10 @@ using UnityEngine.InputSystem;
 
 namespace Elysium.Input
 {
-    public abstract class InputChannelBaseSO : ScriptableObject
+    public abstract class BaseInputSO : ScriptableObject
     {
         public InputKeybinds Keybinds { get; protected set; }
+        protected virtual List<InputAction> RebindableActions { get; } = new List<InputAction>();
 
         // DEVICE CONNECTIVITY
         public event UnityAction OnDeviceDisconnected;
@@ -16,6 +17,11 @@ namespace Elysium.Input
 
         protected virtual void OnEnable()
         {
+            if (Keybinds == null)
+            {
+                Keybinds = new InputKeybinds(RebindableActions);
+            }
+
             InputSystem.onDeviceChange += OnDeviceChanged;
             EnableDefaultInput();
         }
