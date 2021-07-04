@@ -10,9 +10,24 @@
 	},
 	"samples": [
     {
-      "displayName": "Demo",
-      "description": "Small demo scripts showing how to use the package.",
-      "path": "Samples/Demo"
+      "displayName": "New Input System",
+      "description": "Pre-configured controller scripts using the Input System package.",
+      "path": "Samples/New"
+    },
+	{
+      "displayName": "Static Input System",
+      "description": "Pre-configured controller scripts using the Static Input class.",
+      "path": "Samples/Static"
+    },
+	{
+      "displayName": "Mobile Input",
+      "description": "Pre-configured controller scripts using mobile device input.",
+      "path": "Samples/Mobile"
+    },
+	{
+      "displayName": "Resources",
+      "description": "Package resources, such as prefabs, sprites, etc.",
+      "path": "Samples/Resource"
     }
   ]
 }
