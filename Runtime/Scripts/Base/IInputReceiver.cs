@@ -13,6 +13,7 @@ namespace Elysium.Input
         Vector2 Look { get; }
         bool Jump { get; }
         bool Sprint { get; }
+        bool Aim { get; }
 
         event UnityAction<Vector2> OnMoveInputChanged;
         event UnityAction<Vector2> OnLookInputChanged;
@@ -24,5 +25,6 @@ namespace Elysium.Input
         void SetMoveInput(Vector2 _direction);
         void SetJumpInput(bool _isJumping);
         void SetSprintInput(bool _isSprinting);
+        void SetAimInput(bool _isAiming);
     }
 }
